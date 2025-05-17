@@ -109,7 +109,7 @@ CREATE TABLE Skladba
     id_umelca       INT          NOT NULL,
     id_albumu       INT,
     id_zanru        INT          NOT NULL,
-    --verejny         BOOLEAN DEFAULT FALSE,
+    
     pocet_pocuvania INT DEFAULT 0 CHECK (pocet_pocuvania >= 0),
     FOREIGN KEY (id_umelca)
         REFERENCES Umelec (id_umelca)
@@ -144,7 +144,7 @@ CREATE TABLE Playlist
     nazov            VARCHAR(256) NOT NULL,
     id_pouzivatela   INT          NOT NULL,
     datum_vytvorenia DATE         NOT NULL,
-    -- pocet_skladieb   INT DEFAULT 0 CHECK (pocet_skladieb >= 0),
+    
     CONSTRAINT fk_pouzivatel
         FOREIGN KEY (id_pouzivatela)
             REFERENCES Pouzivatel (id_pouzivatel)
@@ -166,7 +166,7 @@ CREATE TABLE Playlist_Skladba
 );
 
 
---naplnenie tabulek
+ 
 INSERT INTO Zaner (Nazov)
  VALUES ('Pop'),
         ('Rock'),
@@ -297,10 +297,7 @@ VALUES ((SELECT id_playlistu FROM playlist WHERE nazov = 'Trapchina'),
 ;
 
 
---pohlady
-
-
---zobrazuje informácie o zoznamoch skladieb
+ 
 CREATE VIEW Playlist_View AS
 SELECT p.id_playlistu,
        p.nazov,
@@ -310,7 +307,7 @@ FROM Playlist p
 GROUP BY p.id_playlistu, p.nazov;
 
 
---zobrazuje používateľov, ktorí majú aktívne predplatné
+ 
 CREATE VIEW Premium_Users AS
 SELECT p.id_pouzivatel,
        p.prezyvka,
@@ -320,7 +317,7 @@ FROM Pouzivatel p
 WHERE pr.typ IN ('Premium', 'Duo', 'Family', 'Student');
 
 
---zobrazuje, koľkokrát používateľ počúval hudbu
+ 
 CREATE VIEW Total_Listen_Time AS
 SELECT p.id_pouzivatel,
        p.prezyvka,
@@ -333,7 +330,7 @@ FROM Historia_Pocuvania h
 GROUP BY p.id_pouzivatel, p.prezyvka;
 
 
---vytvára top skladby o počúvaní
+ 
 CREATE VIEW top_song AS
 SELECT s.id_skladby,
        s.nazov,
@@ -342,7 +339,7 @@ FROM Skladba s
 ORDER BY s.pocet_pocuvania DESC
 LIMIT 10;
 
---vypísať informácie o skladbe
+ 
 CREATE VIEW Skladby_Info AS
 SELECT id_skladby,
        nazov,
